@@ -6,12 +6,6 @@ import { TopNav, type TopCategory } from "@/components/layout/TopNav";
 import { SubCategoryNav, type ElectronicsSub } from "@/components/layout/SubCategoryNav";
 import { ThreeColumnLayout } from "@/components/layout/ThreeColumnLayout";
 
-/**
- * Minimal end-to-end MVP:
- * Basics (left) -> Weights (center) -> Ranked results (right)
- * Uses local JSON only (no backend).
- */
-
 type OSMode = "iOS" | "All" | "Android";
 type ConditionMode = "New" | "All" | "Used";
 type ScreenClass = "small" | "medium" | "large" | "all";
@@ -29,6 +23,7 @@ type TraitKey =
   | "value";
 
 type Weights = Record<TraitKey, number>;
+type SubWeights = Partial<Record<TraitKey, Record<string, number>>>;
 
 type Phone = {
   id: string;
@@ -41,9 +36,90 @@ type Phone = {
   screen: { sizeIn: number; class: "small" | "medium" | "large" };
   traits: Record<TraitKey, number>;
   strengthTags?: string[];
+  imageUrl?: string; // optional (add in JSON)
 };
 
 const ALL_PHONES: Phone[] = (phonesData as any).phones ?? [];
+
+const DIAL_ORDER: TraitKey[] = [
+  "performance",
+  "camera",
+  "battery",
+  "display",
+  "reliability",
+  "value",
+  "software",
+  "safety",
+  "build",
+  "design",
+];
+
+const LABELS: Record<TraitKey, string> = {
+  performance: "Performance",
+  battery: "Battery",
+  camera: "Camera",
+  display: "Display",
+  build: "Build",
+  reliability: "Reliability",
+  software: "Software",
+  safety: "Safety",
+  design: "Design",
+  value: "Value",
+};
+
+// Sub-dials per category (UI + optional scaling effect)
+const SUB_DIALS: Record<TraitKey, { key: string; label: string; tip: string }[]> = {
+  performance: [
+    { key: "cpu", label: "CPU/GPU speed", tip: "How much raw speed matters." },
+    { key: "ram", label: "RAM / multitasking", tip: "Keep many apps open smoothly." },
+    { key: "thermals", label: "Sustained performance", tip: "Avoid throttling." },
+  ],
+  camera: [
+    { key: "photo", label: "Main photo quality", tip: "Day-to-day photos." },
+    { key: "selfie", label: "Selfie quality", tip: "Front camera importance." },
+    { key: "video", label: "Video quality", tip: "Stabilization & clarity." },
+  ],
+  battery: [
+    { key: "endurance", label: "All-day endurance", tip: "Hours per charge." },
+    { key: "charging", label: "Fast charging", tip: "How important quick top-ups are." },
+    { key: "longevity", label: "Battery health over years", tip: "Degradation tolerance." },
+  ],
+  display: [
+    { key: "brightness", label: "Brightness", tip: "Outdoor visibility." },
+    { key: "smoothness", label: "Refresh rate", tip: "Scrolling smoothness." },
+    { key: "quality", label: "Color/sharpness", tip: "Overall panel quality." },
+  ],
+  reliability: [
+    { key: "stability", label: "Stability", tip: "Low crash/bug tolerance." },
+    { key: "durability", label: "Durability", tip: "Survive drops/abuse." },
+    { key: "support", label: "Service/support", tip: "Ease of repair/warranty." },
+  ],
+  value: [
+    { key: "price", label: "Upfront price", tip: "Lower cost matters." },
+    { key: "resale", label: "Resale value", tip: "Value retention." },
+    { key: "tco", label: "Total cost of ownership", tip: "Case, repairs, battery, etc." },
+  ],
+  software: [
+    { key: "updates", label: "Update longevity", tip: "Years of updates." },
+    { key: "features", label: "Software features", tip: "AI, camera features, etc." },
+    { key: "bloat", label: "Low bloat", tip: "Clean, fast UI." },
+  ],
+  safety: [
+    { key: "emergency", label: "Emergency features", tip: "SOS/crash detection, etc." },
+    { key: "security", label: "Security", tip: "Privacy/security features." },
+    { key: "family", label: "Family controls", tip: "Teen/kids controls." },
+  ],
+  build: [
+    { key: "materials", label: "Materials", tip: "Glass/metal feel." },
+    { key: "water", label: "Water resistance", tip: "IP rating importance." },
+    { key: "fit", label: "Fit/finish", tip: "Buttons, rigidity, tolerances." },
+  ],
+  design: [
+    { key: "look", label: "Looks", tip: "Aesthetics." },
+    { key: "handfeel", label: "Hand feel", tip: "Comfort in hand." },
+    { key: "weight", label: "Weight", tip: "Lighter vs heavier preference." },
+  ],
+};
 
 const DEFAULT_WEIGHTS: Weights = {
   performance: 7,
@@ -56,6 +132,93 @@ const DEFAULT_WEIGHTS: Weights = {
   safety: 7,
   design: 5,
   value: 7,
+};
+
+const PRESETS: Record<string, { weights: Weights }> = {
+  "Teen / Student": {
+    weights: {
+      performance: 7,
+      battery: 8,
+      camera: 9,
+      display: 7,
+      build: 5,
+      reliability: 7,
+      software: 6,
+      safety: 6,
+      design: 7,
+      value: 8,
+    },
+  },
+  "Power User": {
+    weights: {
+      performance: 10,
+      battery: 7,
+      camera: 7,
+      display: 8,
+      build: 6,
+      reliability: 7,
+      software: 6,
+      safety: 6,
+      design: 6,
+      value: 5,
+    },
+  },
+  "Value Buyer": {
+    weights: {
+      performance: 6,
+      battery: 7,
+      camera: 6,
+      display: 6,
+      build: 6,
+      reliability: 8,
+      software: 6,
+      safety: 6,
+      design: 5,
+      value: 10,
+    },
+  },
+  "Camera First": {
+    weights: {
+      performance: 7,
+      battery: 7,
+      camera: 10,
+      display: 7,
+      build: 6,
+      reliability: 7,
+      software: 6,
+      safety: 6,
+      design: 6,
+      value: 6,
+    },
+  },
+  Business: {
+    weights: {
+      performance: 7,
+      battery: 8,
+      camera: 6,
+      display: 6,
+      build: 7,
+      reliability: 9,
+      software: 9,
+      safety: 8,
+      design: 5,
+      value: 7,
+    },
+  },
+  Gamer: {
+    weights: {
+      performance: 10,
+      battery: 8,
+      camera: 6,
+      display: 9,
+      build: 6,
+      reliability: 7,
+      software: 6,
+      safety: 6,
+      design: 5,
+      value: 6,
+    },
+  },
 };
 
 type BasicsState = {
@@ -99,31 +262,36 @@ function matchesBrandExclusion(phone: Phone, excluded: string[]) {
   return !excluded.some((x) => x.toLowerCase() === b);
 }
 
+// Subweights affect the parent category by scaling its weight (meaningful even without sub-traits)
+function effectiveWeights(weights: Weights, subWeights: SubWeights): Weights {
+  const out: Weights = { ...weights };
+  (Object.keys(weights) as TraitKey[]).forEach((k) => {
+    const subs = subWeights[k];
+    if (!subs) return;
+    const vals = Object.values(subs);
+    if (!vals.length) return;
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length; // 1..10
+    out[k] = clamp(Math.round((weights[k] * avg) / 10), 1, 10);
+  });
+  return out;
+}
+
 function scorePhone(phone: Phone, weights: Weights): number {
   const entries = Object.entries(weights) as [TraitKey, number][];
   const wSum = entries.reduce((s, [, w]) => s + w, 0);
   if (wSum <= 0) return 0;
 
-  const raw =
-    entries.reduce((s, [k, w]) => s + (phone.traits[k] ?? 0) * w, 0) / wSum;
-
+  const raw = entries.reduce((s, [k, w]) => s + (phone.traits[k] ?? 0) * w, 0) / wSum;
   return clamp(Math.round(raw), 0, 100);
 }
 
 function topWhyBullets(phone: Phone, weights: Weights, basics: BasicsState): string[] {
   const rankedCats = (Object.keys(weights) as TraitKey[])
     .map((k) => ({ k, w: weights[k], t: phone.traits[k] ?? 0 }))
-    .sort((a, b) => b.w - a.w);
-
-  const strong = rankedCats
-    .filter((x) => x.w >= 6)
     .sort((a, b) => b.w * b.t - a.w * a.t)
     .slice(0, 2);
 
-  const bullets: string[] = strong.map((x) => {
-    const label = x.k.charAt(0).toUpperCase() + x.k.slice(1);
-    return `Strong match on ${label} (you weighted it highly).`;
-  });
+  const bullets: string[] = rankedCats.map((x) => `Strong on ${LABELS[x.k]} (high priority).`);
 
   const price = effectivePrice(phone, basics.condition);
   const constraintBits: string[] = [];
@@ -131,7 +299,7 @@ function topWhyBullets(phone: Phone, weights: Weights, basics: BasicsState): str
   if (price !== null) constraintBits.push(`Price: ~$${price}`);
   if (basics.screen !== "all") constraintBits.push(`Size: ${phone.screen.class}`);
 
-  if (constraintBits.length) bullets.push(`Fits your constraints (${constraintBits.slice(0, 2).join(", ")}).`);
+  if (constraintBits.length) bullets.push(`Fits constraints (${constraintBits.slice(0, 2).join(", ")}).`);
   else if (phone.strengthTags?.length) bullets.push(phone.strengthTags[0]);
 
   return bullets.slice(0, 3);
@@ -152,7 +320,9 @@ function Pill3(props: {
     <div className="space-y-1">
       <div className="flex items-center gap-2">
         <div className="text-xs font-semibold text-slate-700">{label}</div>
-        <span className="text-xs text-slate-400" title={title}>ⓘ</span>
+        <span className="text-xs text-slate-400" title={title}>
+          ⓘ
+        </span>
       </div>
       <div className="inline-flex rounded-full border bg-white p-0.5">
         {items.map((x) => {
@@ -189,12 +359,37 @@ export default function Page() {
     excludedBrands: [],
   });
 
-  const [weights, setWeights] = useState<Weights>(DEFAULT_WEIGHTS);
+  // Budget input UX fix: keep text state while typing; commit on blur/Enter
+  const [budgetMinText, setBudgetMinText] = useState(String(basics.budgetMin));
+  const [budgetMaxText, setBudgetMaxText] = useState(String(basics.budgetMax));
 
-  const dialOrder = useMemo(() => {
-    const keys = Object.keys(weights) as TraitKey[];
-    return keys.sort((a, b) => weights[b] - weights[a]);
-  }, [weights]);
+  const commitBudget = (which: "min" | "max") => {
+    setBasics((s) => {
+      const minRaw = which === "min" ? budgetMinText : String(s.budgetMin);
+      const maxRaw = which === "max" ? budgetMaxText : String(s.budgetMax);
+
+      const parsedMin = clamp(parseInt(minRaw || "0", 10) || 0, 0, 5000);
+      const parsedMax = clamp(parseInt(maxRaw || "0", 10) || 0, 0, 5000);
+
+      const min = which === "min" ? parsedMin : s.budgetMin;
+      const max = which === "max" ? parsedMax : s.budgetMax;
+
+      const fixedMin = clamp(min, 0, max);
+      const fixedMax = clamp(max, fixedMin, 5000);
+
+      // keep text in sync
+      setBudgetMinText(String(fixedMin));
+      setBudgetMaxText(String(fixedMax));
+
+      return { ...s, budgetMin: fixedMin, budgetMax: fixedMax };
+    });
+  };
+
+  const [weights, setWeights] = useState<Weights>(DEFAULT_WEIGHTS);
+  const [subWeights, setSubWeights] = useState<SubWeights>({});
+  const [openDial, setOpenDial] = useState<TraitKey | null>(null);
+
+  const effW = useMemo(() => effectiveWeights(weights, subWeights), [weights, subWeights]);
 
   const ranked = useMemo(() => {
     return ALL_PHONES
@@ -204,9 +399,9 @@ export default function Page() {
       .map((p) => ({ phone: p, price: effectivePrice(p, basics.condition) }))
       .filter((x) => x.price !== null)
       .filter((x) => (x.price as number) >= basics.budgetMin && (x.price as number) <= basics.budgetMax)
-      .map((x) => ({ ...x, score: scorePhone(x.phone, weights) }))
+      .map((x) => ({ ...x, score: scorePhone(x.phone, effW) }))
       .sort((a, b) => b.score - a.score);
-  }, [basics, weights]);
+  }, [basics, effW]);
 
   const top10 = ranked.slice(0, 10);
 
@@ -214,7 +409,36 @@ export default function Page() {
     <div className="space-y-4">
       <div>
         <div className="text-sm font-semibold">Basics</div>
-        <div className="text-xs text-slate-500">Set constraints first. Everything updates live.</div>
+        <div className="text-xs text-slate-500">Presets + constraints. Everything updates live.</div>
+      </div>
+
+      {/* Presets */}
+      <div className="space-y-2">
+        <div className="text-xs font-semibold text-slate-700">Presets</div>
+        <div className="flex flex-wrap gap-2">
+          {Object.keys(PRESETS).map((name) => (
+            <button
+              key={name}
+              type="button"
+              onClick={() => setWeights(PRESETS[name].weights)}
+              className="rounded-full border bg-white px-3 py-1 text-xs text-slate-700 hover:bg-slate-50"
+              title="Apply preset weights"
+            >
+              {name}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setWeights(DEFAULT_WEIGHTS);
+              setSubWeights({});
+            }}
+            className="rounded-full border bg-white px-3 py-1 text-xs text-slate-700 hover:bg-slate-50"
+            title="Reset weights"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       <Pill3
@@ -224,7 +448,7 @@ export default function Page() {
         b="All"
         c="Android"
         onChange={(v) => setBasics((s) => ({ ...s, os: v as OSMode }))}
-        title="Filters phones by OS. All shows both."
+        title="Filters phones by OS."
       />
 
       <Pill3
@@ -234,9 +458,10 @@ export default function Page() {
         b="All"
         c="Used"
         onChange={(v) => setBasics((s) => ({ ...s, condition: v as ConditionMode }))}
-        title="New vs Used affects available prices."
+        title="New vs used affects available prices."
       />
 
+      {/* Budget: text inputs with commit */}
       <div className="space-y-2">
         <div className="text-xs font-semibold text-slate-700">Budget</div>
         <div className="grid grid-cols-2 gap-2">
@@ -244,28 +469,26 @@ export default function Page() {
             Min
             <input
               className="mt-1 w-full rounded-lg border px-2 py-1 text-sm"
-              type="number"
-              value={basics.budgetMin}
-              onChange={(e) =>
-                setBasics((s) => {
-                  const min = clamp(Number(e.target.value || 0), 0, s.budgetMax);
-                  return { ...s, budgetMin: min };
-                })
-              }
+              inputMode="numeric"
+              value={budgetMinText}
+              onChange={(e) => setBudgetMinText(e.target.value.replace(/[^\d]/g, ""))}
+              onBlur={() => commitBudget("min")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") commitBudget("min");
+              }}
             />
           </label>
           <label className="text-xs text-slate-600">
             Max
             <input
               className="mt-1 w-full rounded-lg border px-2 py-1 text-sm"
-              type="number"
-              value={basics.budgetMax}
-              onChange={(e) =>
-                setBasics((s) => {
-                  const max = clamp(Number(e.target.value || 0), s.budgetMin, 5000);
-                  return { ...s, budgetMax: max };
-                })
-              }
+              inputMode="numeric"
+              value={budgetMaxText}
+              onChange={(e) => setBudgetMaxText(e.target.value.replace(/[^\d]/g, ""))}
+              onBlur={() => commitBudget("max")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") commitBudget("max");
+              }}
             />
           </label>
         </div>
@@ -293,6 +516,7 @@ export default function Page() {
         </div>
       </div>
 
+      {/* Brand exclude */}
       <div className="space-y-2">
         <div className="text-xs font-semibold text-slate-700">Exclude brands (optional)</div>
         <div className="flex flex-wrap gap-2">
@@ -300,7 +524,9 @@ export default function Page() {
             <button
               key={b}
               type="button"
-              onClick={() => setBasics((s) => ({ ...s, excludedBrands: s.excludedBrands.filter((x) => x !== b) }))}
+              onClick={() =>
+                setBasics((s) => ({ ...s, excludedBrands: s.excludedBrands.filter((x) => x !== b) }))
+              }
               className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700 hover:bg-slate-200"
               title="Click to remove"
             >
@@ -337,22 +563,47 @@ export default function Page() {
     <div className="space-y-3">
       <div>
         <div className="text-sm font-semibold">Weights</div>
-        <div className="text-xs text-slate-500">Highest priorities float to the top.</div>
+        <div className="text-xs text-slate-500">
+          Fixed order (no auto-moving). Use arrows to open sub-dials.
+        </div>
       </div>
 
-      {dialOrder.map((k, idx) => {
-        const isTop5 = idx < 5;
-        const label = k.charAt(0).toUpperCase() + k.slice(1);
+      {DIAL_ORDER.map((k) => {
+        const label = LABELS[k];
+        const isOpen = openDial === k;
+
+        const subs = SUB_DIALS[k] || [];
+        const subObj = subWeights[k] || {};
+        const subAvg =
+          subs.length > 0
+            ? Math.round(
+                (subs.reduce((s, d) => s + (subObj[d.key] ?? 10), 0) / subs.length) * 10
+              ) / 10
+            : 10;
+
         return (
-          <div
-            key={k}
-            className={["rounded-xl border p-3", isTop5 ? "bg-white" : "bg-white/70"].join(" ")}
-            style={{ opacity: isTop5 ? 1 : 0.72 }}
-          >
+          <div key={k} className="rounded-xl border bg-white p-3">
             <div className="flex items-center justify-between">
-              <div className="text-xs font-semibold text-slate-800">{label}</div>
-              <div className="text-xs text-slate-600">{weights[k]}/10</div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setOpenDial((cur) => (cur === k ? null : k))}
+                  className="rounded-md border px-2 py-1 text-xs text-slate-700 hover:bg-slate-50"
+                  title="Open sub-weights"
+                >
+                  {isOpen ? "▾" : "▸"}
+                </button>
+                <div className="text-xs font-semibold text-slate-800">{label}</div>
+                <span className="text-xs text-slate-400" title="Slide 1–10. Higher = more important.">
+                  ⓘ
+                </span>
+              </div>
+
+              <div className="text-xs text-slate-600" title="Effective weight (including sub-dials)">
+                {effW[k]}/10
+              </div>
             </div>
+
             <input
               className="mt-2 w-full"
               type="range"
@@ -361,6 +612,49 @@ export default function Page() {
               value={weights[k]}
               onChange={(e) => setWeights((s) => ({ ...s, [k]: Number(e.target.value) }))}
             />
+
+            {/* Sub-dials */}
+            {isOpen && subs.length > 0 && (
+              <div className="mt-3 space-y-2 rounded-lg border bg-slate-50 p-2">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-semibold text-slate-700">Sub-weights</div>
+                  <div className="text-xs text-slate-500" title="Average of sub-dials scales the parent weight">
+                    avg {subAvg}/10
+                  </div>
+                </div>
+
+                {subs.map((d) => {
+                  const v = subObj[d.key] ?? 10;
+                  return (
+                    <div key={d.key} className="rounded-lg bg-white p-2">
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-slate-700">
+                          {d.label}{" "}
+                          <span className="text-slate-400" title={d.tip}>
+                            ⓘ
+                          </span>
+                        </div>
+                        <div className="text-xs text-slate-600">{v}/10</div>
+                      </div>
+                      <input
+                        className="mt-1 w-full"
+                        type="range"
+                        min={1}
+                        max={10}
+                        value={v}
+                        onChange={(e) => {
+                          const nv = Number(e.target.value);
+                          setSubWeights((s) => ({
+                            ...s,
+                            [k]: { ...(s[k] || {}), [d.key]: nv },
+                          }));
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         );
       })}
@@ -372,7 +666,7 @@ export default function Page() {
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="text-sm font-semibold">Top Matches</div>
-          <div className="text-xs text-slate-500">Ranked from your basics + weights.</div>
+          <div className="text-xs text-slate-500">Ranked from basics + weights.</div>
         </div>
         <div className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700">
           {ranked.length} matches
@@ -386,19 +680,37 @@ export default function Page() {
       ) : (
         <div className="space-y-3">
           {top10.map(({ phone, price, score }, i) => {
-            const why = topWhyBullets(phone, weights, basics);
+            const why = topWhyBullets(phone, effW, basics);
             return (
               <div key={phone.id} className="rounded-xl border bg-white p-4">
                 <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-semibold">
-                      {i + 1}. {phone.brand} {phone.model}
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      {phone.os} • {phone.screen.sizeIn.toFixed(1)}" • ~${price as number}
+                  <div className="flex items-start gap-3">
+                    {/* Optional image */}
+                    {phone.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={phone.imageUrl}
+                        alt={`${phone.brand} ${phone.model}`}
+                        className="h-14 w-14 rounded-lg border object-cover"
+                      />
+                    ) : (
+                      <div className="h-14 w-14 rounded-lg border bg-slate-50" />
+                    )}
+
+                    <div>
+                      <div className="text-sm font-semibold">
+                        {i + 1}. {phone.brand} {phone.model}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {phone.os} • {phone.screen.sizeIn.toFixed(1)}" • ~${price as number}
+                      </div>
                     </div>
                   </div>
-                  <div className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-800 ring-1 ring-blue-200">
+
+                  <div
+                    className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-800 ring-1 ring-blue-200"
+                    title="Match score is a weighted average of your priorities."
+                  >
                     {score}%
                   </div>
                 </div>
@@ -429,7 +741,9 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-slate-100">
       <TopNav active={topCategory} onChange={setTopCategory} />
-      {topCategory === "Electronics" && <SubCategoryNav active={subCategory} onChange={setSubCategory} />}
+      {topCategory === "Electronics" && (
+        <SubCategoryNav active={subCategory} onChange={setSubCategory} />
+      )}
 
       <ThreeColumnLayout left={LeftBasics} center={CenterDials} right={RightResults} />
     </div>
