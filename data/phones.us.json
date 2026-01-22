@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "market": "US",
+    "currency": "USD",
+    "priceSource": "Apple, BestBuy, Amazon, Swappa (median)",
+    "lastUpdated": "2026-01-21"
+  },
+  "phones": [
+    { "id":"iphone_15_pro_max","brand":"Apple","model":"iPhone 15 Pro Max","os":"iOS","releaseYear":2023,"availability":["new","used"],"price":{"new":1199,"used":900},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":96,"battery":88,"camera":95,"display":95,"build":94,"reliability":96,"software":99,"safety":92,"design":88,"value":78},"strengthTags":["Best overall iPhone","Top camera & video","Longest software support"]},
+
+    { "id":"iphone_15_pro","brand":"Apple","model":"iPhone 15 Pro","os":"iOS","releaseYear":2023,"availability":["new","used"],"price":{"new":999,"used":750},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":95,"battery":78,"camera":94,"display":90,"build":92,"reliability":95,"software":98,"safety":90,"design":88,"value":80},"strengthTags":["Top-tier performance","Compact flagship","Excellent longevity"]},
+
+    { "id":"iphone_15","brand":"Apple","model":"iPhone 15","os":"iOS","releaseYear":2023,"availability":["new","used"],"price":{"new":799,"used":620},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":88,"battery":80,"camera":86,"display":85,"build":88,"reliability":94,"software":98,"safety":88,"design":86,"value":85},"strengthTags":["Balanced iPhone","Great resale","Strong everyday camera"]},
+
+    { "id":"iphone_14_pro","brand":"Apple","model":"iPhone 14 Pro","os":"iOS","releaseYear":2022,"availability":["used"],"price":{"used":680},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":86,"battery":76,"camera":90,"display":88,"build":90,"reliability":93,"software":97,"safety":88,"design":84,"value":82},"strengthTags":["Pro camera features","Strong value used","Long support runway"]},
+
+    { "id":"iphone_13","brand":"Apple","model":"iPhone 13","os":"iOS","releaseYear":2021,"availability":["used"],"price":{"used":480},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":82,"battery":78,"camera":82,"display":82,"build":86,"reliability":92,"software":96,"safety":86,"design":82,"value":90},"strengthTags":["Excellent used value","Solid battery","Long iOS support"]},
+
+    { "id":"pixel_8_pro","brand":"Google","model":"Pixel 8 Pro","os":"Android","releaseYear":2023,"availability":["new","used"],"price":{"new":999,"used":650},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":85,"battery":82,"camera":96,"display":92,"build":85,"reliability":85,"software":96,"safety":90,"design":82,"value":88},"strengthTags":["Best photography","Clean Android","Fast updates"]},
+
+    { "id":"pixel_8","brand":"Google","model":"Pixel 8","os":"Android","releaseYear":2023,"availability":["new","used"],"price":{"new":699,"used":520},"screen":{"sizeIn":6.2,"class":"medium"},"traits":{"performance":82,"battery":78,"camera":92,"display":88,"build":82,"reliability":84,"software":96,"safety":88,"design":82,"value":90},"strengthTags":["Top camera","Compact Android","Strong value"]},
+
+    { "id":"pixel_8a","brand":"Google","model":"Pixel 8a","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":499,"used":380},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":78,"battery":80,"camera":90,"display":82,"build":75,"reliability":82,"software":95,"safety":85,"design":78,"value":95},"strengthTags":["Outstanding value","Great camera","Long Android support"]},
+
+    { "id":"pixel_7a","brand":"Google","model":"Pixel 7a","os":"Android","releaseYear":2023,"availability":["used"],"price":{"used":320},"screen":{"sizeIn":6.1,"class":"medium"},"traits":{"performance":74,"battery":76,"camera":88,"display":80,"build":74,"reliability":80,"software":94,"safety":84,"design":76,"value":96},"strengthTags":["Best budget camera","Very low used price","Clean Android"]},
+
+    { "id":"galaxy_s24_ultra","brand":"Samsung","model":"Galaxy S24 Ultra","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":1299,"used":900},"screen":{"sizeIn":6.8,"class":"large"},"traits":{"performance":96,"battery":88,"camera":94,"display":96,"build":95,"reliability":88,"software":90,"safety":92,"design":85,"value":78},"strengthTags":["Top display","Excellent zoom","Premium build"]},
+
+    { "id":"galaxy_s24_plus","brand":"Samsung","model":"Galaxy S24+","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":999,"used":720},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":90,"battery":86,"camera":88,"display":94,"build":90,"reliability":86,"software":90,"safety":90,"design":84,"value":82},"strengthTags":["Big bright display","Strong battery","Well-rounded flagship"]},
+
+    { "id":"galaxy_s24","brand":"Samsung","model":"Galaxy S24","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":799,"used":600},"screen":{"sizeIn":6.2,"class":"medium"},"traits":{"performance":88,"battery":78,"camera":86,"display":90,"build":88,"reliability":85,"software":90,"safety":88,"design":84,"value":84},"strengthTags":["Compact flagship","Excellent screen","Solid all-rounder"]},
+
+    { "id":"galaxy_s23_fe","brand":"Samsung","model":"Galaxy S23 FE","os":"Android","releaseYear":2023,"availability":["new","used"],"price":{"new":599,"used":450},"screen":{"sizeIn":6.4,"class":"medium"},"traits":{"performance":80,"battery":82,"camera":80,"display":88,"build":82,"reliability":84,"software":88,"safety":86,"design":80,"value":90},"strengthTags":["Great value Samsung","Good battery","Strong display"]},
+
+    { "id":"oneplus_12","brand":"OnePlus","model":"OnePlus 12","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":799,"used":600},"screen":{"sizeIn":6.8,"class":"large"},"traits":{"performance":94,"battery":90,"camera":85,"display":92,"build":88,"reliability":82,"software":85,"safety":85,"design":86,"value":90},"strengthTags":["Fast charging","Excellent performance","Great value flagship"]},
+
+    { "id":"oneplus_11","brand":"OnePlus","model":"OnePlus 11","os":"Android","releaseYear":2023,"availability":["used"],"price":{"used":520},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":90,"battery":86,"camera":82,"display":90,"build":86,"reliability":80,"software":84,"safety":84,"design":84,"value":92},"strengthTags":["Strong used value","Fast and smooth","Big display"]},
+
+    { "id":"nothing_phone_2","brand":"Nothing","model":"Phone (2)","os":"Android","releaseYear":2023,"availability":["new","used"],"price":{"new":599,"used":480},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":82,"battery":82,"camera":78,"display":88,"build":82,"reliability":80,"software":82,"safety":82,"design":90,"value":88},"strengthTags":["Unique design","Clean software","Good value"]},
+
+    { "id":"rog_phone_8","brand":"ASUS","model":"ROG Phone 8","os":"Android","releaseYear":2024,"availability":["new"],"price":{"new":999},"screen":{"sizeIn":6.78,"class":"large"},"traits":{"performance":98,"battery":88,"camera":78,"display":95,"build":90,"reliability":82,"software":80,"safety":82,"design":86,"value":80},"strengthTags":["Best gaming performance","Excellent thermals","High refresh display"]},
+
+    { "id":"moto_g_power_2024","brand":"Motorola","model":"Moto G Power (2024)","os":"Android","releaseYear":2024,"availability":["new","used"],"price":{"new":299,"used":230},"screen":{"sizeIn":6.7,"class":"large"},"traits":{"performance":60,"battery":92,"camera":62,"display":78,"build":70,"reliability":78,"software":72,"safety":80,"design":72,"value":95},"strengthTags":["Excellent battery","Very affordable","Large screen"]}
+  ]
+}
