@@ -1,26 +1,216 @@
-import phones from "@/data/phones.us.json";
-
-const weights = {
-  performance: 9,
-  camera: 8,
-  battery: 7,
-  value: 6,
-  reliability: 8
-};
-
-export default function Page() {
-  const ranked = phones.phones
-    .map(p => ({ ...p, score: scorePhone(p, weights) }))
-    .sort((a,b) => b.score - a.score)
-    .slice(0,5);
-
-  return (
-    <div>
-      {ranked.map(p => (
-        <div key={p.id}>
-          <b>{p.brand} {p.model}</b> — {p.score.toFixed(1)}%
-        </div>
-      ))}
-    </div>
-  );
+{
+  "market": "US",
+  "updated": "2024-01",
+  "phones": [
+    {
+      "id": "iphone-15-pro",
+      "brand": "Apple",
+      "model": "iPhone 15 Pro",
+      "os": "iOS",
+      "priceNew": 999,
+      "priceUsed": 850,
+      "screenSize": 6.1,
+      "traits": {
+        "performance": 95,
+        "camera": 92,
+        "battery": 80,
+        "value": 70,
+        "reliability": 95,
+        "build": 95,
+        "screen": 92,
+        "software": 95,
+        "ecosystem": 98,
+        "repairability": 65
+      }
+    },
+    {
+      "id": "iphone-15",
+      "brand": "Apple",
+      "model": "iPhone 15",
+      "os": "iOS",
+      "priceNew": 799,
+      "priceUsed": 680,
+      "screenSize": 6.1,
+      "traits": {
+        "performance": 88,
+        "camera": 85,
+        "battery": 82,
+        "value": 78,
+        "reliability": 93,
+        "build": 90,
+        "screen": 88,
+        "software": 95,
+        "ecosystem": 98,
+        "repairability": 65
+      }
+    },
+    {
+      "id": "samsung-s24-ultra",
+      "brand": "Samsung",
+      "model": "Galaxy S24 Ultra",
+      "os": "Android",
+      "priceNew": 1199,
+      "priceUsed": 950,
+      "screenSize": 6.8,
+      "traits": {
+        "performance": 96,
+        "camera": 94,
+        "battery": 88,
+        "value": 72,
+        "reliability": 88,
+        "build": 93,
+        "screen": 98,
+        "software": 85,
+        "ecosystem": 80,
+        "repairability": 70
+      }
+    },
+    {
+      "id": "samsung-s24",
+      "brand": "Samsung",
+      "model": "Galaxy S24",
+      "os": "Android",
+      "priceNew": 799,
+      "priceUsed": 650,
+      "screenSize": 6.2,
+      "traits": {
+        "performance": 90,
+        "camera": 86,
+        "battery": 80,
+        "value": 80,
+        "reliability": 86,
+        "build": 88,
+        "screen": 90,
+        "software": 85,
+        "ecosystem": 80,
+        "repairability": 72
+      }
+    },
+    {
+      "id": "pixel-8-pro",
+      "brand": "Google",
+      "model": "Pixel 8 Pro",
+      "os": "Android",
+      "priceNew": 999,
+      "priceUsed": 750,
+      "screenSize": 6.7,
+      "traits": {
+        "performance": 85,
+        "camera": 96,
+        "battery": 78,
+        "value": 82,
+        "reliability": 82,
+        "build": 85,
+        "screen": 92,
+        "software": 98,
+        "ecosystem": 75,
+        "repairability": 68
+      }
+    },
+    {
+      "id": "pixel-8",
+      "brand": "Google",
+      "model": "Pixel 8",
+      "os": "Android",
+      "priceNew": 699,
+      "priceUsed": 550,
+      "screenSize": 6.2,
+      "traits": {
+        "performance": 82,
+        "camera": 92,
+        "battery": 75,
+        "value": 88,
+        "reliability": 80,
+        "build": 82,
+        "screen": 88,
+        "software": 98,
+        "ecosystem": 75,
+        "repairability": 68
+      }
+    },
+    {
+      "id": "oneplus-12",
+      "brand": "OnePlus",
+      "model": "OnePlus 12",
+      "os": "Android",
+      "priceNew": 799,
+      "priceUsed": 600,
+      "screenSize": 6.8,
+      "traits": {
+        "performance": 93,
+        "camera": 82,
+        "battery": 90,
+        "value": 85,
+        "reliability": 78,
+        "build": 85,
+        "screen": 90,
+        "software": 80,
+        "ecosystem": 70,
+        "repairability": 65
+      }
+    },
+    {
+      "id": "iphone-14-pro",
+      "brand": "Apple",
+      "model": "iPhone 14 Pro",
+      "os": "iOS",
+      "priceNew": 899,
+      "priceUsed": 700,
+      "screenSize": 6.1,
+      "traits": {
+        "performance": 90,
+        "camera": 88,
+        "battery": 78,
+        "value": 75,
+        "reliability": 94,
+        "build": 93,
+        "screen": 90,
+        "software": 94,
+        "ecosystem": 98,
+        "repairability": 62
+      }
+    },
+    {
+      "id": "iphone-se-2022",
+      "brand": "Apple",
+      "model": "iPhone SE (2022)",
+      "os": "iOS",
+      "priceNew": 429,
+      "priceUsed": 300,
+      "screenSize": 4.7,
+      "traits": {
+        "performance": 80,
+        "camera": 65,
+        "battery": 60,
+        "value": 92,
+        "reliability": 90,
+        "build": 75,
+        "screen": 60,
+        "software": 95,
+        "ecosystem": 98,
+        "repairability": 70
+      }
+    },
+    {
+      "id": "samsung-a54",
+      "brand": "Samsung",
+      "model": "Galaxy A54",
+      "os": "Android",
+      "priceNew": 449,
+      "priceUsed": 330,
+      "screenSize": 6.4,
+      "traits": {
+        "performance": 70,
+        "camera": 75,
+        "battery": 85,
+        "value": 90,
+        "reliability": 80,
+        "build": 75,
+        "screen": 82,
+        "software": 82,
+        "ecosystem": 80,
+        "repairability": 75
+      }
+    }
+  ]
 }
