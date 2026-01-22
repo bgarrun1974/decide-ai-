@@ -1,0 +1,26 @@
+import phones from "@/data/phones.us.json";
+
+const weights = {
+  performance: 9,
+  camera: 8,
+  battery: 7,
+  value: 6,
+  reliability: 8
+};
+
+export default function Page() {
+  const ranked = phones.phones
+    .map(p => ({ ...p, score: scorePhone(p, weights) }))
+    .sort((a,b) => b.score - a.score)
+    .slice(0,5);
+
+  return (
+    <div>
+      {ranked.map(p => (
+        <div key={p.id}>
+          <b>{p.brand} {p.model}</b> — {p.score.toFixed(1)}%
+        </div>
+      ))}
+    </div>
+  );
+}
