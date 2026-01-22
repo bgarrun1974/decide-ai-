@@ -1,0 +1,43 @@
+decide-ai/
+├─ app/
+│  ├─ layout.tsx        # global layout (top nav, 3 columns)
+│  ├─ page.tsx          # Electronics > Phones
+│  ├─ globals.css
+│
+├─ components/
+│  ├─ layout/
+│  │  ├─ TopNav.tsx
+│  │  ├─ SubCategoryNav.tsx
+│  │  └─ ThreeColumnLayout.tsx
+│  │
+│  ├─ basics/
+│  │  ├─ OsDial.tsx
+│  │  ├─ ConditionDial.tsx
+│  │  ├─ BudgetSlider.tsx
+│  │  ├─ ScreenSize.tsx
+│  │  ├─ PrimaryUse.tsx
+│  │  ├─ Longevity.tsx
+│  │  └─ BrandExclude.tsx
+│  │
+│  ├─ dials/
+│  │  ├─ CategoryDial.tsx
+│  │  └─ SubDial.tsx
+│  │
+│  ├─ phones/
+│  │  ├─ PhoneCard.tsx
+│  │  ├─ PhoneWhy.tsx
+│  │  └─ PhoneList.tsx
+│
+├─ data/
+│  └─ phones.us.json
+│
+├─ lib/
+│  ├─ scoring.ts        # weighted scoring engine (pure math)
+│  ├─ presets.ts       # Teen / Power / Value etc.
+│  └─ utils.ts
+│
+├─ public/
+│
+├─ package.json
+├─ tsconfig.json
+└─ README.md
