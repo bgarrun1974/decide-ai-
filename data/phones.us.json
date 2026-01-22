@@ -7,9 +7,10 @@
       "brand": "Apple",
       "model": "iPhone 15 Pro",
       "os": "iOS",
-      "priceNew": 999,
-      "priceUsed": 850,
-      "screenSize": 6.1,
+      "releaseYear": 2023,
+      "availability": ["new", "used"],
+      "price": { "new": 999, "used": 850 },
+      "screen": { "sizeIn": 6.1, "class": "medium" },
       "traits": {
         "performance": 95,
         "camera": 92,
@@ -17,20 +18,22 @@
         "value": 70,
         "reliability": 95,
         "build": 95,
-        "screen": 92,
+        "display": 92,
         "software": 95,
-        "ecosystem": 98,
-        "repairability": 65
-      }
+        "safety": 92,
+        "design": 88
+      },
+      "strengthTags": ["Top-tier performance", "Excellent camera", "Strong long-term reliability"]
     },
     {
       "id": "iphone-15",
       "brand": "Apple",
       "model": "iPhone 15",
       "os": "iOS",
-      "priceNew": 799,
-      "priceUsed": 680,
-      "screenSize": 6.1,
+      "releaseYear": 2023,
+      "availability": ["new", "used"],
+      "price": { "new": 799, "used": 680 },
+      "screen": { "sizeIn": 6.1, "class": "medium" },
       "traits": {
         "performance": 88,
         "camera": 85,
@@ -38,20 +41,22 @@
         "value": 78,
         "reliability": 93,
         "build": 90,
-        "screen": 88,
+        "display": 88,
         "software": 95,
-        "ecosystem": 98,
-        "repairability": 65
-      }
+        "safety": 90,
+        "design": 86
+      },
+      "strengthTags": ["Balanced iPhone value", "Strong resale & support", "Great everyday camera"]
     },
     {
       "id": "samsung-s24-ultra",
       "brand": "Samsung",
       "model": "Galaxy S24 Ultra",
       "os": "Android",
-      "priceNew": 1199,
-      "priceUsed": 950,
-      "screenSize": 6.8,
+      "releaseYear": 2024,
+      "availability": ["new", "used"],
+      "price": { "new": 1199, "used": 950 },
+      "screen": { "sizeIn": 6.8, "class": "large" },
       "traits": {
         "performance": 96,
         "camera": 94,
@@ -59,20 +64,22 @@
         "value": 72,
         "reliability": 88,
         "build": 93,
-        "screen": 98,
+        "display": 98,
         "software": 85,
-        "ecosystem": 80,
-        "repairability": 70
-      }
+        "safety": 92,
+        "design": 85
+      },
+      "strengthTags": ["Best-in-class display", "Excellent zoom camera", "Top-end performance"]
     },
     {
       "id": "samsung-s24",
       "brand": "Samsung",
       "model": "Galaxy S24",
       "os": "Android",
-      "priceNew": 799,
-      "priceUsed": 650,
-      "screenSize": 6.2,
+      "releaseYear": 2024,
+      "availability": ["new", "used"],
+      "price": { "new": 799, "used": 650 },
+      "screen": { "sizeIn": 6.2, "class": "medium" },
       "traits": {
         "performance": 90,
         "camera": 86,
@@ -80,20 +87,22 @@
         "value": 80,
         "reliability": 86,
         "build": 88,
-        "screen": 90,
+        "display": 90,
         "software": 85,
-        "ecosystem": 80,
-        "repairability": 72
-      }
+        "safety": 88,
+        "design": 84
+      },
+      "strengthTags": ["Compact flagship", "Great display", "Strong all-around option"]
     },
     {
       "id": "pixel-8-pro",
       "brand": "Google",
       "model": "Pixel 8 Pro",
       "os": "Android",
-      "priceNew": 999,
-      "priceUsed": 750,
-      "screenSize": 6.7,
+      "releaseYear": 2023,
+      "availability": ["new", "used"],
+      "price": { "new": 999, "used": 750 },
+      "screen": { "sizeIn": 6.7, "class": "large" },
       "traits": {
         "performance": 85,
         "camera": 96,
@@ -101,20 +110,22 @@
         "value": 82,
         "reliability": 82,
         "build": 85,
-        "screen": 92,
+        "display": 92,
         "software": 98,
-        "ecosystem": 75,
-        "repairability": 68
-      }
+        "safety": 90,
+        "design": 82
+      },
+      "strengthTags": ["Best photography", "Fast updates", "Excellent software experience"]
     },
     {
       "id": "pixel-8",
       "brand": "Google",
       "model": "Pixel 8",
       "os": "Android",
-      "priceNew": 699,
-      "priceUsed": 550,
-      "screenSize": 6.2,
+      "releaseYear": 2023,
+      "availability": ["new", "used"],
+      "price": { "new": 699, "used": 550 },
+      "screen": { "sizeIn": 6.2, "class": "medium" },
       "traits": {
         "performance": 82,
         "camera": 92,
@@ -122,20 +133,22 @@
         "value": 88,
         "reliability": 80,
         "build": 82,
-        "screen": 88,
+        "display": 88,
         "software": 98,
-        "ecosystem": 75,
-        "repairability": 68
-      }
+        "safety": 88,
+        "design": 82
+      },
+      "strengthTags": ["Great camera for size", "Strong value", "Long update runway"]
     },
     {
       "id": "oneplus-12",
       "brand": "OnePlus",
       "model": "OnePlus 12",
       "os": "Android",
-      "priceNew": 799,
-      "priceUsed": 600,
-      "screenSize": 6.8,
+      "releaseYear": 2024,
+      "availability": ["new", "used"],
+      "price": { "new": 799, "used": 600 },
+      "screen": { "sizeIn": 6.8, "class": "large" },
       "traits": {
         "performance": 93,
         "camera": 82,
@@ -143,20 +156,22 @@
         "value": 85,
         "reliability": 78,
         "build": 85,
-        "screen": 90,
+        "display": 90,
         "software": 80,
-        "ecosystem": 70,
-        "repairability": 65
-      }
+        "safety": 85,
+        "design": 86
+      },
+      "strengthTags": ["Fast charging & battery", "High performance", "Strong value flagship"]
     },
     {
       "id": "iphone-14-pro",
       "brand": "Apple",
       "model": "iPhone 14 Pro",
       "os": "iOS",
-      "priceNew": 899,
-      "priceUsed": 700,
-      "screenSize": 6.1,
+      "releaseYear": 2022,
+      "availability": ["new", "used"],
+      "price": { "new": 899, "used": 700 },
+      "screen": { "sizeIn": 6.1, "class": "medium" },
       "traits": {
         "performance": 90,
         "camera": 88,
@@ -164,20 +179,22 @@
         "value": 75,
         "reliability": 94,
         "build": 93,
-        "screen": 90,
+        "display": 90,
         "software": 94,
-        "ecosystem": 98,
-        "repairability": 62
-      }
+        "safety": 90,
+        "design": 84
+      },
+      "strengthTags": ["Strong used Pro value", "Great camera", "Long iOS support"]
     },
     {
       "id": "iphone-se-2022",
       "brand": "Apple",
       "model": "iPhone SE (2022)",
       "os": "iOS",
-      "priceNew": 429,
-      "priceUsed": 300,
-      "screenSize": 4.7,
+      "releaseYear": 2022,
+      "availability": ["new", "used"],
+      "price": { "new": 429, "used": 300 },
+      "screen": { "sizeIn": 4.7, "class": "small" },
       "traits": {
         "performance": 80,
         "camera": 65,
@@ -185,20 +202,22 @@
         "value": 92,
         "reliability": 90,
         "build": 75,
-        "screen": 60,
+        "display": 60,
         "software": 95,
-        "ecosystem": 98,
-        "repairability": 70
-      }
+        "safety": 82,
+        "design": 70
+      },
+      "strengthTags": ["Lowest-cost iPhone", "Long software support", "Small and easy to handle"]
     },
     {
       "id": "samsung-a54",
       "brand": "Samsung",
       "model": "Galaxy A54",
       "os": "Android",
-      "priceNew": 449,
-      "priceUsed": 330,
-      "screenSize": 6.4,
+      "releaseYear": 2023,
+      "availability": ["new", "used"],
+      "price": { "new": 449, "used": 330 },
+      "screen": { "sizeIn": 6.4, "class": "medium" },
       "traits": {
         "performance": 70,
         "camera": 75,
@@ -206,11 +225,12 @@
         "value": 90,
         "reliability": 80,
         "build": 75,
-        "screen": 82,
+        "display": 82,
         "software": 82,
-        "ecosystem": 80,
-        "repairability": 75
-      }
+        "safety": 84,
+        "design": 78
+      },
+      "strengthTags": ["Great midrange value", "Strong battery", "Good screen for price"]
     }
   ]
 }
